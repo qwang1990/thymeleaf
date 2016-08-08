@@ -23,7 +23,7 @@ public class MyController {
 	 private TaskService taskService;
 	 
 	@RequestMapping("/start")
-	public String startInterview(@RequestParam("username") String username) {
+	public String startInterview(@RequestParam("username") String username,Map<String, Object> mode) {
 		Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("username", username);
         runtimeService.startProcessInstanceByKey("firstprocess", variables);
@@ -32,7 +32,7 @@ public class MyController {
 	}
 	
 	@RequestMapping("/process")
-	public String managerInterview(@RequestParam("username") String username) {
+	public String managerInterview(@RequestParam("role") String username,Map<String, Object> mode) {
 	   List<Task> tasks = taskService.createTaskQuery().taskAssignee(username).list();
 	   
 	   if(tasks.size()==0){
