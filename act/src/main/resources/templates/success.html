@@ -4,7 +4,18 @@
    <td th:text="${task.task.name}">heheh</td>
    <td th:text="${task.username}">heheh</td>
    <td><a th:href="@{'apply/'+${task.task.id}+'/'+${task.task.executionId}}">批准</a></td>
+	<td><img alt="" th:src="@{'/image/'+${task.processId}}"/></td>
    </tr>
 </table>
 
+
+<table th:each="task:${tasks2}">
+   <tr>
+　　<td th:text="${task.task.id}">1</td>
+   <td th:text="${task.task.name}">heheh</td>
+   <td th:text="${task.username}">heheh</td>
+   <td><a th:href="@{'claim/'+${task.task.id}+'/'+${task.task.executionId}}">claim</a></td>
+   <td><img alt="" th:src="@{'/image/'+${task.processId}}"/></td>
+   </tr>
+</table>
 
