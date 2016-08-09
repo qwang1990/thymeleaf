@@ -33,6 +33,13 @@ public class UserConfig {
 	    	        hr.setPassword("hr");
 	    	        identityservice.saveUser(hr);
 	    		}
+	    		
+	    		user = identityservice.createUserQuery().userId("hary").singleResult();
+	    		if(user == null){
+	    			User hr = identityservice.newUser("hary");
+	    	        hr.setPassword("hary");
+	    	        identityservice.saveUser(hr);
+	    		}
 
 	        }
 	    };

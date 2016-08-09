@@ -27,12 +27,14 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.activiti.image.ProcessDiagramGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MyController {
@@ -67,6 +69,45 @@ public class MyController {
         return "index";
         
 	}
+	
+	
+	 
+	@RequestMapping("/hary")
+	public String assign(Map<String, Object> mode) {
+		Map<String, Object> variables = new HashMap<String, Object>();
+       variables.put("username", "hary");
+       List<Task> tasksAssignee = taskService.createTaskQuery().taskAssignee("hary").list();
+       List<TaskMess> mess = new ArrayList();
+	   
+	   for(Task t:tasksAssignee){
+		   Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
+		   String processId = exe.getProcessInstanceId();
+		  
+		   //String processId = t.getProcessDefinitionId();
+		   
+		   
+
+		   System.out.println("hahahahahahhahah");
+		   TaskMess temp = new TaskMess();
+		   temp.setTask(t);
+		   temp.setUsername((String)runtimeService.getVariable(exe.getId(), "username"));
+		   temp.setProcessId(processId);
+		   mess.add(temp);  
+	   }
+	   mode.put("tasks", mess);
+	   return "hary";
+      
+	}
+	
+	@RequestMapping("/haryassign")
+	public String haryAssign(String name, String taskId){
+		System.out.println(name+"    "+taskId);
+		taskService.setVariable(taskId, "todoUser", name);
+		taskService.complete(taskId);
+		return "redirect:/process?role=" + name; 
+	}
+	
+	
 	
 	@RequestMapping("/process")
 	public String managerInterview(@RequestParam("role") String username,Map<String, Object> mode) {

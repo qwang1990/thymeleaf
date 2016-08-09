@@ -1,0 +1,16 @@
+<table th:each="task:${tasks}">
+   <tr>
+　　<td th:text="${task.task.id}">1</td>
+   <td th:text="${task.task.name}">heheh</td>
+   <td th:text="${task.username}">heheh</td>
+   <td>
+   <form action="/haryassign">
+   <input name="name" value="请输入名字" type="text" />
+   <input name="taskId" th:value="${task.task.id}"  type="hidden" />
+   <input type="submit" value="提交"/>
+   </form>
+   </td>
+   <!-- <a th:href="@{'apply/'+${task.task.id}+'/'+${task.task.executionId}}">分配</a></td> -->
+	<td><img alt="" th:src="@{'/image/'+${task.processId}}"/></td>
+   </tr>
+</table>
